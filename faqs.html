@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ - PIXORA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #00d9ff;
+            --secondary-color: #1a1a1a;
+            --background-light: #ffffff;
+            --background-dark: #f3f3f3;
+            --text-color: #111;
+            --card-background: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s ease;
+        }
+
+        /* --- Base & Typography --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-color);
+            transition: background var(--transition-speed), color var(--transition-speed);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        p {
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+        }
+        
+        /* --- Dark Mode Styles --- */
+        body.dark {
+            --secondary-color: #f5f5f5;
+            --background-light: #121212;
+            --background-dark: #222;
+            --text-color: #f5f5f5;
+            --card-background: #1e1e1e;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark .header {
+            background: linear-gradient(to right, #222, #111);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark .nav-link,
+        body.dark .logo h1,
+        body.dark .theme-toggle {
+            color: #f5f5f5;
+        }
+        
+        body.dark .hamburger-menu span {
+            background: #f5f5f5;
+        }
+        
+        body.dark .faq-item {
+            background-color: #2c2c2c;
+        }
+        
+        body.dark .faq-question {
+            color: #f5f5f5;
+        }
+        
+        body.dark .faq-answer {
+            color: #ccc;
+        }
+
+        /* --- Header --- */
+        .header {
+            width: 100%;
+            background: linear-gradient(to right, #ffffff, #f3f3f3);
+            color: var(--text-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            transition: color var(--transition-speed);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 16px;
+            position: relative;
+            transition: color var(--transition-speed);
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            left: 0;
+            bottom: -4px;
+            background-color: var(--primary-color);
+            transition: var(--transition-speed);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.2s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger-menu span {
+            height: 3px;
+            width: 25px;
+            background: var(--text-color);
+            border-radius: 5px;
+            transition: var(--transition-speed);
+        }
+        
+        /* --- Main Content & FAQ Hero --- */
+        .faq-hero {
+            padding-top: 150px;
+            padding-bottom: 50px;
+            background: linear-gradient(135deg, #e0eafc, #c5e1ff);
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+        }
+
+        body.dark .faq-hero {
+            background: linear-gradient(135deg, #2c3e50, #4a69bd);
+            color: var(--secondary-color);
+        }
+
+        .faq-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 10px;
+        }
+
+        .faq-hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        body.dark .faq-hero p {
+            color: #bbb;
+        }
+
+        /* --- FAQ Accordion --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .faq-item {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            position: relative;
+        }
+        
+        .faq-question:hover {
+            background-color: var(--background-dark);
+        }
+
+        body.dark .faq-question:hover {
+            background-color: #222;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform var(--transition-speed);
+        }
+        
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+            transition: max-height var(--transition-speed), padding var(--transition-speed);
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px; /* Adjust as needed */
+            padding: 20px;
+        }
+
+        /* --- Sticky Footer --- */
+        footer {
+            background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+            color: #fff;
+            padding: 60px 20px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+            gap: 30px;
+            justify-content: space-between;
+            z-index: 1;
+            position: relative;
+        }
+
+        .footer-section {
+            flex: 1 1 250px;
+        }
+
+        .footer-branding h1 {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .footer-heading {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition-speed);
+        }
+
+        .social-icon:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+        }
+
+        .social-icon:hover svg {
+            fill: var(--primary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all var(--transition-speed);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .newsletter-input-group {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .newsletter-input-group input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .newsletter-input-group button {
+            padding: 10px 15px;
+            background: var(--primary-color);
+            border: none;
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+            transition: var(--transition-speed);
+        }
+
+        .newsletter-input-group button:hover {
+            background: #fff;
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: var(--background-light);
+                flex-direction: column;
+                width: 200px;
+                display: none;
+                padding: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            body.dark .nav-menu {
+                background: #1e1e1e;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .hamburger-menu {
+                display: flex;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .newsletter-input-group {
+                flex-direction: column;
+            }
+            .newsletter-input-group input,
+            .newsletter-input-group button {
+                border-radius: 4px;
+                margin: 5px 0;
+            }
+            .social-icons-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>PIXORA</h1>
+            </div>
+            <nav class="nav-menu" id="nav-menu">
+                  <a href="#hero-section" class="nav-link">Home</a>
+    <a href="#services" class="nav-link">Gallery</a>
+         <a href="About us.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="faqs.html">FAQ</a>
+		
+                <button id="theme-toggle" class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+            </nav>
+            <div class="hamburger-menu" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="faq-hero">
+            <h1>Frequently Asked Questions</h1>
+            <p>Everything you need to know about PIXORA, from image uploads to licensing and more.</p>
+        </section>
+
+        <section class="faq-section">
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">How do I upload images to my gallery?</div>
+                    <div class="faq-answer">
+                        <p>To upload images, you must have an active PIXORA account. Navigate to the "Upload" section in your dashboard, select the images from your device, and follow the on-screen prompts to add titles, tags, and descriptions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What file types are supported for upload?</div>
+                    <div class="faq-answer">
+                        <p>We support a wide range of image formats, including **JPG, PNG, GIF, SVG, and WEBP**. We also accept **PSD and AI** files for our premium users to allow for more flexible design options.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I download images in different resolutions?</div>
+                    <div class="faq-answer">
+                        <p>Yes, all users can download images. Depending on the license and the original image quality, you can choose from various resolutions and sizes to fit your needs, from web-optimized to high-resolution print-ready files.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How can I find a specific image?</div>
+                    <div class="faq-answer">
+                        <p>Our powerful search functionality allows you to find images using keywords, categories, and tags. You can also filter results by color, orientation (horizontal/vertical), and image type.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What is a royalty-free license?</div>
+                    <div class="faq-answer">
+                        <p>A royalty-free license means you can use an image multiple times for a single, one-time payment. You don't have to pay additional fees for each use. Our licenses are simple and cover most uses, but always check the specific license terms for each image.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What are the different types of licenses available?</div>
+                    <div class="faq-answer">
+                        <p>We offer two primary licenses: **Standard** and **Extended**. The Standard license is suitable for most digital and non-commercial projects, while the Extended license covers commercial use, merchandise, and larger print runs.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do I share images with others?</div>
+                    <div class="faq-answer">
+                        <p>You can share images directly from our platform using the share button on each image's page. We support sharing to popular social media platforms and provide a direct link for easy embedding.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I create my own albums or collections?</div>
+                    <div class="faq-answer">
+                        <p>Yes! With your PIXORA account, you can create unlimited albums to organize your favorite images. Simply click the "Add to Album" button on any image page and select an existing album or create a new one.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What should I do if I find inappropriate content?</div>
+                    <div class="faq-answer">
+                        <p>We take content moderation very seriously. If you encounter any content that violates our terms of service, please use the **"Report Image"** button on the image page. Our moderation team will review the report and take appropriate action.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I use the images for my business or commercial projects?</div>
+                    <div class="faq-answer">
+                        <p>Yes, many of our images are available for commercial use. Look for images with a **Commercial License** badge. For more details on what's covered, please refer to our full licensing terms.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do the social features like likes and comments work?</div>
+                    <div class="faq-answer">
+                        <p>You can "like" an image to show your appreciation and add it to your favorites. Comments allow you to engage with the artist and other users, sharing feedback or asking questions about the work. Be sure to follow our community guidelines for respectful interactions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Is the website mobile-friendly?</div>
+                    <div class="faq-answer">
+                        <p>Absolutely! PIXORA is designed to be fully responsive. You can browse, upload, and manage your images on any device, from a desktop computer to a smartphone or tablet.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Are there limits on how many images I can upload or download?</div>
+                    <div class="faq-answer">
+                        <p>Our free accounts have a monthly limit on uploads and high-resolution downloads. Premium and Pro subscriptions offer unlimited uploads and downloads, along with additional features. You can find more details on our pricing page.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do I upgrade or manage my subscription?</div>
+                    <div class="faq-answer">
+                        <p>You can manage your subscription directly from your user dashboard. Simply log in, navigate to the "Billing" or "Subscription" section, and follow the steps to upgrade or update your plan.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do you automatically optimize images after I upload them?</div>
+                    <div class="faq-answer">
+                        <p>Yes, we automatically generate optimized versions of your images for fast loading on the web while keeping the original file for high-resolution downloads. This ensures a great viewing experience for all users.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What's the best resolution for uploading images?</div>
+                    <div class="faq-answer">
+                        <p>We recommend uploading images that are at least **1920px** on the longest side to ensure they look sharp and can be used for various purposes. Higher resolutions are always better for print-ready downloads.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I change the website's theme?</div>
+                    <div class="faq-answer">
+                        <p>Yes! We offer a **dark mode** option to make browsing easier on your eyes. Just click the moon icon in the header to switch between light and dark themes.  </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How can I contact customer support?</div>
+                    <div class="faq-answer">
+                        <p>If you can't find the answer to your question here, you can reach our support team through the **Contact Us** page. We aim to respond to all inquiries within 24-48 hours.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What are your support hours?</div>
+                    <div class="faq-answer">
+                        <p>Our customer support team is available from Monday to Friday, 9:00 AM to 5:00 PM (EST). We are closed on weekends and public holidays.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Is it free to create an account?</div>
+                    <div class="faq-answer">
+                        <p>Yes, it's completely free to create an account and start browsing and downloading images with a standard license. Paid plans are available for more advanced features and commercial use.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How is content moderated on the platform?</div>
+                    <div class="faq-answer">
+                        <p>All uploaded images undergo a manual and automated review process to ensure they comply with our community guidelines and are free from copyright infringement and inappropriate content.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I sell my own photos on PIXORA?</div>
+                    <div class="faq-answer">
+                        <p>We are a royalty-free image gallery, not a marketplace. Our platform is for sharing and using images freely, but we do not currently have a feature for users to sell their own photos directly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What is an image gallery website?</div>
+                    <div class="faq-answer">
+                        <p>An image gallery website is a platform where users can browse, upload, and download a curated collection of photos and digital artwork. These sites often provide tools for searching, organizing, and sharing content.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How do I delete my PIXORA account?</div>
+                    <div class="faq-answer">
+                        <p>You can delete your account by navigating to the "Account Settings" section in your dashboard and following the "Delete Account" instructions. Be aware that this action is permanent and will remove all your uploaded images and data.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section footer-branding">
+                <h1>PIXORA</h1>
+                <p class="tagline">To empower creativity by offering 5.7 million+ high-quality, royalty-free images — easily searchable, instantly downloadable, and ready to bring your vision to life.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91V131.33c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121 44.38-121 124.72v70.62H22.89V288h81.51v224h100.17V288z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.4 151.7c.3 4.5 .3 9 .3 13.6 0 138.72-105.6 298.56-298.56 298.56-59.5 0-114.68-17.24-161.14-47.1 8.44.99 16.81 1.49 25.64 1.49 49.03 0 94.17-16.61 130.17-44.83-46.13-.86-84.86-31.24-98.1-72.9 6.5.99 13.02 1.49 19.81 1.49 9.57 0 18.84-1.31 27.61-3.74-48.1-9.57-84.2-51.98-84.2-102.98v-1.31c14.17 7.86 30.27 12.69 47.47 13.28-28.26-18.89-46.85-51.01-46.85-87.47 0-19.45 5.2-37.58 14.29-53.21 51.85 63.66 129.3 105.42 216.36 110.05-1.8-7.77-2.71-15.82-2.71-24.05 0-57.78 46.85-104.64 104.64-104.64 30.17 0 57.5 12.69 76.66 33.14 23.87-4.5 46.38-13.4 66.72-25.36-7.86 24.54-24.54 45.13-46.13 58.1 21.19-2.42 41.59-8.16 60.38-16.32-14.52 20.79-32.77 39.31-53.72 54.25z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-115 51.4-115 115s51.4 115 115 115 115-51.4 115-115-51.4-115-115-115zm0 190.5c-41.7 0-75.5-33.8-75.5-75.5s33.8-75.5 75.5-75.5 75.5 33.8 75.5 75.5-33.8 75.5-75.5 75.5zm146.4-194.3c0 14.9-12 26.9-26.9 26.9s-26.9-12-26.9-26.9 12-26.9 26.9-26.9 26.9 12 26.9 26.9zm76.1 27.2c-1.7-35.3-9.9-66.7-36.2-92.9C384.4 18.2 352.9 10 317.6 8.3 280.7 6.6 171.3 6.6 134.4 8.3 99.1 10 67.6 18.2 41.3 44.5 15 70.8 6.8 102.2 5.1 137.5 3.4 174.4 3.4 283.8 5.1 320.7c1.7 35.3 9.9 66.7 36.2 92.9 26.3 26.3 57.7 34.5 92.9 36.2 36.9 1.7 146.3 1.7 183.2 0 35.3-1.7 66.7-9.9 92.9-36.2 26.3-26.3 34.5-57.7 36.2-92.9 1.7-36.9 1.7-146.3 0-183.2zM398.8 388c-7.8 19.6-22.9 34.7-42.5 42.5-29.4 11.7-99.3 9-132.3 9s-102.9 2.6-132.3-9c-19.6-7.8-34.7-22.9-42.5-42.5-11.7-29.4-9-99.3-9-132.3s-2.6-102.9 9-132.3c7.8-19.6 22.9-34.7 42.5-42.5C119.1 70 189 72.6 222 72.6s102.9-2.6 132.3 9c19.6 7.8 34.7 22.9 42.5 42.5 11.7 29.4 9 99.3 9 132.3s2.6 102.9-9 132.3z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zm-46.44-341a53.86 53.86 0 1 1 53.86-53.86 53.87 53.87 0 0 1-53.86 53.86zM447.9 448h-92.4V302.4c0-34.7-12.5-58.4-43.7-58.4-23.8 0-38 16-44.3 31.4-2.3 5.4-2.8 12.9-2.8 20.5V448H172V148.9h88.6v40.8c11.8-18.3 32.9-44.3 80.1-44.3 58.5 0 102.2 38.2 102.2 120.3V448z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section footer-links-group">
+                <h4 class="footer-heading">Company</h4>
+                <ul class="footer-links">
+                 <li><a href="About us.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="faqs.html">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section footer-links-group">
+                <h4 class="footer-heading">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faqs.html">FAQs</a></li>
+                    <li><a href="Privacy policy.html">Privacy Policy</a></li>
+                    <li><a href="terms of service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section newsletter-form">
+                <h4 class="footer-heading">Join Our Newsletter</h4>
+                <p>Stay updated with our latest stock images and exclusive offers.</p>
+                <form class="newsletter-input-group" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PIXORA. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById("hamburger-menu");
+        const navMenu = document.getElementById("nav-menu");
+
+        hamburger.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById("theme-toggle");
+        themeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            const isDarkMode = document.body.classList.contains("dark");
+            themeToggle.innerHTML = isDarkMode ? "☀️" : "🌙";
+        });
+
+        // FAQ Accordion functionality
+        const faqItems = document.querySelectorAll(".faq-item");
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector(".faq-question");
+            question.addEventListener("click", () => {
+                const isActive = item.classList.contains("active");
+
+                // Close all other active items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains("active")) {
+                        otherItem.classList.remove("active");
+                    }
+                });
+                
+                // Toggle the clicked item's active class
+                if (!isActive) {
+                    item.classList.add("active");
+                } else {
+                    item.classList.remove("active");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
